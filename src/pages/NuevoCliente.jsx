@@ -1,23 +1,35 @@
-import { useNavigate, Form, useActionData } from "react-router-dom"
+import { useNavigate, Form, useActionData, redirect } from "react-router-dom"
 import Formulario from "../components/Formulario"
 import Error from "../components/Error"
+import {agregarCliente} from "../data/clientes"
 
 export async function action ({request}){
   const formData = await request.formData()
+
   //console.log(...formData)
   //validar los datos del action
   //validar que no esten vacios los campos
   const datos = Object.fromEntries(formData)
+  const email= formData.get("email")
   const errores =[]
   if(Object.values(datos).includes("")){
     errores.push("Debes llenar todos los campos")
+  }
+  //validar email
+  let regex = new RegExp(/^([a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4})$/);
+  
+  if(!regex.test(email)){
+    errores.push("Email no válido")
+    
   }
   if(Object.keys(errores).length >0){
     return errores
   }
   
+  await agregarCliente(datos)
+  
 
-  return {}
+  return redirect("/")
 }
 const NuevoCliente = () => {
   const errores = useActionData()
@@ -40,6 +52,7 @@ const NuevoCliente = () => {
          )}
         <Form
         method="post"
+        noValidate
         >
            <Formulario
           />
