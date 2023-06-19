@@ -36,15 +36,12 @@
       "empresa": "Codigo Con Juan"
     },
     {
+      "nombre": "Juan ",
+      "empresa": "Santee",
+      "email": "j@s.com",
+      "telefono": "23423423",
+      "notas": "No ",
       "id": 6
-    },
-    {
-      "nombre": "om",
-      "empresa": "om",
-      "email": "om@ms.com",
-      "telefono": "23423",
-      "notas": "dfsd",
-      "id": 7
     },
     {
       "nombre": "Loana",

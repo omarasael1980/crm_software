@@ -1,8 +1,15 @@
-
+import { useNavigate, Form, redirect } from "react-router-dom"
+import { eliminarCliente } from "../data/clientes"
+export async function action({params}){
+    
+    
+   await eliminarCliente(params.clienteId)
+return redirect('/')
+}
 
 function Cliente({cliente}) {
-    const {nombre, empresa, email, telefono} = cliente
-    
+    const {nombre, empresa, email, telefono,id} = cliente
+    const navegar = useNavigate()
   return (
   
 
@@ -21,12 +28,30 @@ function Cliente({cliente}) {
             </p>
         </td>
         <td className="p-6 flex gap-3">
-            <button className="text-blue-600 hover:text-blue-900  uppercase font-bold text-xs ">
+            <button 
+            onClick={()=>
+                navegar(`/clientes/${id}/editar`)
+  }
+            className="text-blue-600 hover:text-blue-900  uppercase font-bold text-xs ">
                 Editar
+
             </button>
-            <button className="text-red-600 hover:text-red-900 uppercase font-bold text-xs ">
-                Eliminar
-            </button>
+           <Form
+           method="POST"
+           action={`/clientes/${id}/eliminar`}
+           onSubmit={e=>{
+                if(!confirm("Deseas eliminar al cliente: "+nombre)){
+                e.preventDefault(0)
+            }
+        }
+
+           }
+        
+           >
+                <button  type="submit" className="text-red-600 hover:text-red-900 uppercase font-bold text-xs ">
+                    Eliminar
+                </button>
+           </Form>
         </td>
       </tr>
   
